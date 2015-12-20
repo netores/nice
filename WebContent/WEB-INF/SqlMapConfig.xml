@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <configuration>
+  <typeAliases>
+  <typeAlias type="kr.co.nice.dto.GoodsDto" alias="GoodsDto"/>
+  <typeAlias type="kr.co.nice.dto.OrderDto" alias="OrderDto"/>
+  <typeAlias type="kr.co.nice.dto.ReceiveDto" alias="ReceiveDto"/>
+  <typeAlias type="kr.co.nice.dto.StockDto" alias="StockDto"/>
+  <typeAlias type="kr.co.nice.dto.TradeDto" alias="TradeDto"/>
+  <typeAlias type="kr.co.nice.dto.ReceiveDto" alias="ReceiveDto"/>
+  <typeAlias type="kr.co.nice.dto.UserorderDto" alias="UserorderDto"/>
+  <typeAlias type="kr.co.nice.dto.WishlistDto" alias="WishlistDto"/>
+  <typeAlias type="kr.co.nice.dto.UserDto" alias="UserDto"/>
+  <typeAlias type="kr.co.nice.dto.ReviewDto" alias="ReviewDto"/>
+  <typeAlias type="kr.co.nice.dto.ReviewPageDto" alias="ReviewPageDto"/>
+  
+  
+  </typeAliases>
+  
+  <mappers>
+	<mapper resource="kr/co/nice/resources/mapper.xml"/>
+	</mappers>
+  </configuration>

@@ -1,0 +1,60 @@
+@charset "utf-8";
+/************************************************
+JinSales
+Author : 전혜정 (2014-06-02)
+*************************************************/
+
+/***************** 회원가입 *****************/
+article.signup p.txt {margin:15px 0 10px 15px; font-size:15px;}
+article.signup p.txt em {font-weight:bold; color:#222;}
+article.signup form {text-align:right; margin:10px 0 0 5px; padding:0 45px 0 0;}
+article.signup form input.inputclick {font-size:1.25em; margin:0 0 7px 3px; padding:0 0 0 10px; border:1px solid #c7c7c7; color:#333;
+width:180px; height:30px; -webkit-background-size:180px 30px;
+border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;}
+
+article.signup form fieldset {position:relative; min-width:275px; padding:0 38px 0 0;}
+article.signup form ul.i_checkbox {position:absolute; top:0; right:0;}
+article.signup form ul.i_checkbox li {margin:0 0 5px 0;}
+article.signup form ul.i_checkbox input {display:inline-block; width:35px; height:31px; display:none;}
+article.signup form ul.i_checkbox label {display:inline-block; width:35px; height:31px; padding:5px 0 0 0;}
+article.signup form ul.i_checkbox input:checked + label {background:url("../images/check.png") no-repeat;}
+
+article.signup form div.message {z-index:200; margin:0 0 10px 0; text-align:center; background-color:#f95757; width:185px; height:28px; -webkit-background-size:185px 28px; line-height:28px; border-radius:20px; -moz-border-radius:20px; -webkit-border-radius:20px;}
+article.signup form div.m01 { position:absolute; top:-25px; right:30px;}
+article.signup form div.m02 {position:absolute; top:15px; right:30px;}
+article.signup form div.m03 {position:absolute; top:53px; right:30px;}
+article.signup form div.m04 { position:absolute; top:93px; right:30px;}
+article.signup form div.m05 {position:absolute; top:132px; right:30px;}
+article.signup form div.m06 {position:absolute; top:170px; right:30px;}
+article.signup form div.message p {background:url("../images/arr.png") no-repeat 20% 90%;  font-size:11px; color:#fff; text-align:center; padding:0 0 10px 0;}
+article.signup form div.m01, article.signup form div.m02, article.signup form div.m03, article.signup form div.m04, article.signup form div.m06 {display:none;}
+
+article.signup ul.ps {margin:5px 0 10px 15px;}
+article.signup ul.ps li {margin:0 0 5px 0; font-size:10px;}
+
+article.signup form select {margin:0 0 7px 3px; padding:0 0 0 30px; width:192px; height:32px; border:1px solid #c7c7c7;}
+article.signup div.area_btn {text-align:center; margin:0 0 10px 0;}
+article.signup div.area_btn a {display:inline-block; font-size:16px; font-weight:bold; text-align:center; margin:10px 10px 0 0;
+width:102px; height:43px; -webkit-background-size:102px 43px; line-height:43px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;}
+
+article.signup div.area_btn a.btn_signup {border:1px solid #1ca1d6; color:#fff; background: rgb(33,173,226); /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzIxYWRlMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyOWEyY2UiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMjlhMmNlIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+background: -moz-linear-gradient(top, rgb(33,173,226) 0%, rgb(41,162,206) 100%, rgb(41,162,206) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(33,173,226)), color-stop(100%,rgb(41,162,206)), color-stop(100%,rgb(41,162,206))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgb(33,173,226) 0%,rgb(41,162,206) 100%,rgb(41,162,206) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgb(33,173,226) 0%,rgb(41,162,206) 100%,rgb(41,162,206) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgb(33,173,226) 0%,rgb(41,162,206) 100%,rgb(41,162,206) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgb(33,173,226) 0%,rgb(41,162,206) 100%,rgb(41,162,206) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#21ade2', endColorstr='#29a2ce',GradientType=0 ); /* IE6-8 */}
+
+article.signup div.area_btn a.btn_cancel {border:1px solid #ddd; color:#666; background: rgb(252,252,252); /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZjZmNmYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZGVkZWQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top, rgb(252,252,252) 0%, rgb(237,237,237) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(252,252,252)), color-stop(100%,rgb(237,237,237))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgb(252,252,252) 0%,rgb(237,237,237) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgb(252,252,252) 0%,rgb(237,237,237) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgb(252,252,252) 0%,rgb(237,237,237) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgb(252,252,252) 0%,rgb(237,237,237) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-8 */}

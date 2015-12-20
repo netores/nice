@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace=" ">
+
+	
+	<select id="select_one_goods" parameterType="int" resultType="GoodsDto">
+		SELECT *
+		FROM goods
+		WHERE goodsno=#{goodsno}
+	</select>
+	<select id="select_one_goods_goodsname" parameterType="GoodsDto" resultType="GoodsDto">
+		SELECT goodsno
+		from goods
+		WHERE goodsname=#{goodsname} and goodssize=#{goodssize} and color=#{color} and category=#{category} and gender=#{gender}
+	
+	</select>
+
+	<!-- 재고관리 부분 -->
+	<select id="select_all_goodsstock" resultType="StockDto">
+		SELECT
+		gs.goodsno, gs.category, gs.goodsname, gs.goodssize, gs.gender, gs.color ,gs.price,st.stockamount,st.stockno
+		from goodsstock st ,goods gs
+		WHERE st.goodsno = gs.goodsno
+
+	</select>
+
+	<select id="select_list_goods_goodsname" parameterType="GoodsDto"
+		resultType="GoodsDto">
+		select goodsname
+		from goods
+		where category=#{category} and
+		gender=#{gender}
+		group by goodsname
+	</select>
+
+	<select id="select_list_goods_color" parameterType="GoodsDto"
+		resultType="GoodsDto">
+		select color
+		from goods
+		where goodsname= #{goodsname} and
+		gender = #{gender}
+		group by color
+	</select>
+
+	<select id="select_list_goods_goodssize" parameterType="GoodsDto"
+		resultType="GoodsDto">
+		select goodssize
+		from goods
+		where color=#{color} and gender=#{gender} and goodsname =#{goodsname}
+	</select>
+	
+	<select id="select_list_stock" parameterType="StockDto" resultType="StockDto" >
+
+		SELECT gs.category,gs.goodsno,gs.goodsname,gs.goodssize, gs.color ,gs.price,st.stockamount,st.stockno
+		from goodsstock st ,goods gs
+		WHERE st.goodsno = gs.goodsno and gs.goodsname=#{goodsname} and gender=#{gender} and goodssize=#{goodssize} and color=#{color}
+
+	</select>
+	<select id="select_one_company" parameterType="int" resultType="int">
+		SELECT NVL(cno,0)
+		from trade
+		where goodsno = #{goodsno}
+	</select>
+	<select id="select_all_company" resultType="TradeDto">
+		select goodsno
+		from trade
+	</select>
+	
+	<!-- 발주 부분 -->
+	
+	<insert id="insert_order" parameterType="OrderDto">
+	Insert into goodsorder
+	values (goodsorder_seq.nextval,#{goodsno},#{orderamount},#{cno})
+	</insert>
+	
+	<!-- 발주리스트 -->
+	
+	<select id="select_list_order" parameterType="OrderDto" resultType="OrderDto">
+	
+		SELECT g.category, g.goodsname, g.color,g.gender, g.goodssize, g.price, go.goodsorderno, go.orderamount, t.cname
+		FROM goodsorder go, goods g, trade t
+		WHERE go.goodsno = g.goodsno and
+			  go.cno = t.cno and
+			  g.goodsno = t.goodsno
+		order by goodsorderno asc
+		
+	</select>
+	
+	<update id="update_one_stock_amount" parameterType="OrderDto">
+	Update goodsorder
+	set orderamount = #{orderamount}
+	where goodsorderno =#{goodsorderno}
+	</update>
+	<select id="select_one_goodsorder_goodsno" parameterType="int" resultType="int">
+	select goodsno
+	from goodsorder
+	where goodsorderno =#{goodsorderno}
+	</select>
+	<update id="update_one_goodsstock_amountPlus" parameterType="StockDto">
+	Update goodsstock
+	set stockamount= (stockamount + #{stockamount})
+	where goodsno = #{goodsno}
+	</update>
+	<update id="update_one_stock_nowamount" parameterType="OrderDto">
+	update goodsorder
+	set orderamount= (orderamount+#{orderamount})
+	where goodsorderno=#{goodsorderno}
+	</update>
+	<insert id="insert_goods_newgoods" parameterType="GoodsDto">
+  		INSERT INTO goods
+  		VALUES (goods_seq.nextval,#{category},#{gender},#{goodsname},#{price},#{releasedate},#{goodsimg},#{explanation},#{goodssize},#{color},#{discount},#{material},#{country},#{status})
+  	</insert>
+  	<insert id="insert_one_stock" parameterType="int"> 
+  		INSERT INTO goodsstock
+  		values (goodsstock_seq.nextval,0,#{goodsno})
+  	</insert>
+  	<select id="select_all_goodsreceive" resultType="ReceiveDto">
+  	select g.category ,g.goodsname,g.color,g.gender,g.goodssize,r.receiveno,r.incost,r.receiveamount,r.receivedate,r.company,r.id
+	from goods g, goodsreceive r
+	where g.goodsno =r.goodsno
+  	</select>
+  	<select id="insert_one_goodsreceive" parameterType="ReceiveDto">
+  	insert into goodsreceive
+  	values (goodsreceive_seq.nextval,#{goodsno},#{incost},#{receiveamount},sysdate,#{company},#{id})
+  	</select>
+  	
+	<!-- userOrder 배송상태를 admin이 control하는 sql문 -->
+	<select id="select_all_userOrder" resultType="UserorderDto">
+
+		SELECT g.goodsname,g.category,g.gender,g.color,g.goodssize,g.price,u.userorderno, u.goodsno, u.buyamount, to_char(u.paydate,'yy/mm/dd') paydate, u.id, u.orderaddress, u.orderstatus
+		FROM userorder u , goods g
+		where u.goodsno = g.goodsno
+	
+	</select>
+	
+	<!-- 배송상태 변경 쿼리 -->
+	<update id="update_one_userorderstatus" parameterType="UserorderDto" >
+	
+		UPDATE  userorder
+		SET orderstatus = #{orderstatus}
+		WHERE userorderno = #{userorderno}
+	</update>
+  	<!-- 배송상태 변경 쿼리 -->
+	<update id="update_one_userorder_status" parameterType="UserorderDto" >
+	
+		UPDATE  userorder
+		SET orderstatus = #{orderstatus}
+		WHERE userorderno = #{userorderno}
+	</update>
+	<delete id="delete_list_goodsorder" parameterType="int" >
+		DELETE goodsorder
+		WHERE orderamount =#{amount}
+		
+	</delete>
+	
+	
+	<!-- 주완 -->
+	
+	<select id="select_list_wishlist" parameterType="java.lang.String" resultType="WishlistDto">
+ 	select gs.goodsname, gs.goodsno,gs.gender, gs.price, gs.color, gs.goodssize ,gs.goodsimg,wl.wishamount,wl.wishno
+    from goods gs,wishlist wl
+    where id = #{id} and gs.goodsno = wl.goodsno
+    </select>
+
+
+<!-- 	<select id="select_list_goods" parameterType="java.lang.String" resultType="GoodsDto">
+		SELECT g.goodsimg, g.goodsname, g.price
+		FROM goods g natural join wishlist w
+		WHERE w.id = #{id}
+		
+	</select>
+	
+	<select id="select_list_wishlist" parameterType="java.lang.String" resultType="WishlistDto">
+		SELECT wishno, wishamount
+		FROM wishlist
+		WHERE id = #{id}
+	
+	</select> -->
+	
+	<select id="select_list_userorder" parameterType="String" resultType="UserorderDto">
+		SELECT uo.userorderno, uo.goodsno, uo.buyamount, to_char(uo.paydate,'yy/mm/dd') paydate, uo.id ,uo.orderaddress, uo.orderstatus,g.goodsname,g.goodssize,g.color,g.category ,g.gender,g.price,g.goodsimg
+		FROM userorder uo , goods g
+		WHERE uo.id= #{id} and g.goodsno = uo.goodsno
+	</select>
+	
+	<delete id="delete_list_wishlist" parameterType="int">
+		Delete wishlist
+		WHERE wishno=#{wishno}
+	</delete>
+	<insert id="insert_one_userorder" parameterType="UserorderDto">
+		Insert Into userorder
+		values (userorder_seq.nextval, #{goodsno},#{buyamount},to_char(sysdate,'yy/mm/dd'),#{id},#{orderaddress},#{orderstatus},#{receive_name},#{receive_cp})
+	</insert>
+	<select id="loginOk" parameterType="UserDto" resultType="int">
+		select count(*) flag
+		from users
+		where id = #{id} and pw = #{pw}
+	</select>
+	
+	 <select id="selectByEmail" parameterType="string" resultType="int">
+		select count(*) email_flag
+		from users
+		where email = #{email}
+	</select>
+	
+	<select id="selectById" parameterType="string" resultType="int">
+		select count(*) id_flag
+		from users
+		where id = #{id}
+	</select>
+	
+	<select id="selectOneUser" parameterType="string" resultType="UserDto">
+		select * from users
+		where id = #{id}
+	</select>
+	
+	<insert id="insertData" parameterType="UserDto">
+	Insert Into users(id,userno,pw,name,phone,address,birthdate,email,grade)
+	Values (#{id},USERS_SEQ.NEXTVAL,#{pw},#{name},#{phone},#{address},#{birthdate},#{email},0)
+	</insert>
+	
+	<update id="modifyUser" parameterType="UserDto">
+		Update users
+		set pw=#{pw} , phone=#{phone}, address=#{address}, birthdate=#{birthdate}
+		WHERE id=#{id} 
+	</update>
+	
+	<delete id="deleteUser" parameterType="string">
+		DELETE users
+		WHERE id=#{id}
+	</delete>
+	<select id="select_one_grade" parameterType="String" resultType="int">
+	Select grade
+	From users
+	where id=#{id}
+	</select>
+	<select id="select_review_avg" parameterType="int" resultType="int">
+		select nvl(round(avg(reviewgrade),0),0) reviewgrade
+		from review
+		where goodsno=#{goodsno}
+	</select>
+	<select id="select_list_color_category" parameterType="GoodsDto" resultType="GoodsDto">
+		SELECT goodsname,goodsno,price,goodsimg,discount,color,category,status
+		from goods 
+		where goodsno in (select max(goodsno) 
+		from goods 
+		where color= #{color} and gender= #{gender} and category=#{category}
+		group by goodsname)
+	</select>
+	<select id="select_list_color" parameterType="GoodsDto" resultType="GoodsDto">
+		SELECT goodsname,goodsno,price,goodsimg,discount,color,category,status
+		from goods 
+		where goodsno in (select max(goodsno) 
+		from goods 
+		where color= #{color} and gender= #{gender}
+		group by goodsname)
+	</select>
+	<select id="select_list_goods" parameterType="GoodsDto"
+		resultType="GoodsDto">
+		
+		SELECT goodsname,goodsno,price,goodsimg,discount,color,status
+		from goods 
+		where goodsno in (select max(goodsno) 
+		from goods 
+		where category= #{category} and gender= #{gender} 
+		group by goodsname)
+	</select>
+	<select id="select_detail_goodssize" parameterType="GoodsDto" resultType="GoodsDto">
+		select goodssize,goodsno,gender,color,status
+		from goods
+		where goodsname in (select goodsname from goods where goodsno=#{goodsno}) and gender=#{gender}
+	</select>
+
+
+	<select id="select_one_goodsname" parameterType="String" resultType="GoodsDto">
+		SELECT *
+		FROM goods
+		WHERE goodsname=#{goodsname}
+	</select>
+	
+	<select id="select_review" parameterType="ReviewPageDto" resultType="ReviewDto">
+		select rn, reviewno, id,goodsno, reviewgrade,context, to_char(reviewdate,'yyyy/MM/dd') reviewdate,reviewtitle,review_size,review_comf,review_durability
+  		from ( select rownum rn,reviewno,id, goodsno, reviewgrade,context,reviewdate,reviewtitle,review_size,review_comf,review_durability
+     		from ( select reviewno, goodsno,id, reviewgrade, context, reviewdate, reviewtitle,review_size,review_comf,review_durability
+      			  from review 
+      			  where goodsno=#{goodsno}
+      			  order by reviewno desc )
+      		where rownum &lt;= #{end} )
+		where rn &gt;= #{start}
+	</select>
+	<select id="select_review_totalcount" resultType="int" parameterType="int">
+		select count(*) cnt
+		from review
+		where goodsno=#{goodsno}
+	</select>
+	<select id="select_goodsno_count_category_gender" resultType="int" parameterType="GoodsDto">
+		select count(*) cnt
+		from goods
+		where goodsno in (select max(goodsno) 
+		from goods 
+		where category= #{category} and gender= #{gender}
+		group by goodsname)
+	</select>
+	<select id="select_goodsno_count_gender_color" resultType="int" parameterType="GoodsDto">
+		select count(*) cnt
+		from goods
+		where goodsno in (select max(goodsno) 
+		from goods 
+		where color= #{color} and gender= #{gender}
+		group by goodsname)
+	</select>
+	<insert id="insert_review_one" parameterType="ReviewDto">
+		insert into review(reviewno,id,goodsno,reviewgrade,context,reviewdate,reviewtitle,review_size,review_comf,review_durability)
+		values (review_seq.nextval, #{id},#{goodsno}, #{reviewgrade},#{context}, sysdate,#{reviewtitle},#{review_size},#{review_comf},#{review_durability})	
+	</insert>
+	<insert id="insert_one_wishlist" parameterType="WishlistDto">
+		Insert into wishlist
+		values (wishlist_seq.nextval,#{id},#{goodsno},#{wishamount})
+	</insert>
+</mapper>
